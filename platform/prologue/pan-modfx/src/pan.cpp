@@ -6,7 +6,7 @@ void MODFX_INIT(uint32_t platform, uint32_t api) {
         Called on instantiation of the effect. Use this callback to perform any required initializations. 
         See inc/userprg.h for possible values of platform and api.
     */
-    depth_gain = 0.5f;
+    depth_gain = 1.f;
     speed_pan = 0.5f;
 }
 
@@ -41,13 +41,12 @@ void MODFX_PROCESS(const float *main_buffer_in, float *main_buffer_out,
 
 void MODFX_PARAM(uint8_t fx_index, uint32_t fx_value) {
     const float value_f32 = q31_to_f32(fx_value);
-    const float norm_value_f32 = clip01f(value_f32 + 1.f) * 0.5f;
     switch (fx_index) {
         case k_user_modfx_param_time:
-            speed_pan = norm_value_f32;
+            speed_pan = value_f32;
             break;
         case k_user_modfx_param_depth:
-            depth_gain = norm_value_f32;
+            depth_gain = 2 * value_f32;
             break;
         default:
             break;

@@ -8,7 +8,7 @@ UCSRC =
 
 UCXXSRC = src/pan.cpp
 
-UINCDIR =
+UINCDIR = inc
 
 UDEFS =
 
