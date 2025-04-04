@@ -4,20 +4,24 @@
 
 using ShapeFn = float(*)(float);
 
+// Workaround, maps and other heap-based structures are too slow for embedded hardware
+
 enum class Mode {
     TANH,
     ATAN,
-    FOLD,
-    FUZZ,
+    SIG,
+    SIN,
     count
 };
 
-constexpr int num_modes = static_cast<int>(Mode::count);
+constexpr int NUM_MODES = static_cast<int>(Mode::count);
 
-ShapeFn get_shaper(Mode mode) {
+static inline ShapeFn get_shaper(Mode mode) {
     switch (mode) {
         case Mode::TANH: return clip_tanh;
         case Mode::ATAN: return clip_atan;
+        case Mode::SIG: return clip_sig;
+        case Mode::SIN: return clip_sin_abs;
         default: return identity;
     }
 }

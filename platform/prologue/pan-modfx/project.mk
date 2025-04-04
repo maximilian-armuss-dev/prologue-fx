@@ -4,14 +4,17 @@
 
 PROJECT = pan_modfx
 
+UCXXSRC = \
+ 	../main.cpp \
+ 	src/PanFX.cpp
+
+UINCDIR = \
+	../inc \
+	src \
+	..
+
+
 UCSRC =
-
-UCXXSRC = src/pan.cpp
-
-UINCDIR = inc
-
 UDEFS =
-
-ULIB = 
-
+ULIB =
 ULIBDIR =

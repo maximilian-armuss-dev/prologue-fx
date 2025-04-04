@@ -4,14 +4,17 @@
 
 PROJECT = clip_modfx
 
+UCXXSRC = \
+ 	../main.cpp \
+ 	src/ClippingFX.cpp
+
+UINCDIR = \
+	../inc \
+	src \
+	..
+
+
 UCSRC =
-
-UCXXSRC = src/clip.cpp
-
-UINCDIR = inc
-
 UDEFS =
-
-ULIB = 
-
+ULIB =
 ULIBDIR =
