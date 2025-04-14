@@ -58,7 +58,7 @@ extern "C" {
 #define k_num_user_modules   5U
   
   /**
-   * prologue specific platform/module pairs. Passed to user code via initialization callback.
+   * fx specific platform/module pairs. Passed to user code via initialization callback.
    */
 #define k_user_target_prologue        ((1U<<8))
 #define k_user_target_prologue_global ((1U<<8) | #define k_user_module_global)
