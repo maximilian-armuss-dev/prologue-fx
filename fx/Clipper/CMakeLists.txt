@@ -85,4 +85,4 @@ add_custom_command(
         DEPENDS ${PROJECT_NAME}
 )
 
-add_custom_target(package_fx ALL DEPENDS ${OUT_DIR}/${PKGARCH})
+add_custom_target(${PROJECT_NAME}_package ALL DEPENDS ${OUT_DIR}/${PKGARCH})

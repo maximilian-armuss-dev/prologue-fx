@@ -45,12 +45,13 @@ include_directories(
         ${SHARED_DIR}/inc
         ${SHARED_DIR}/inc/dsp
         ${SHARED_DIR}/inc/utils
+        ${SHARED_DIR}/wrappers
         ${CMSIS_DIR}/Include
 )
 
 # --- Source files
 file(GLOB_RECURSE CSRC
-        "${SHARED_DIR}/main.cpp"
+        "${SHARED_DIR}/main_${FX_TYPE_LOWER}fx.cpp"
         "${SHARED_DIR}/tpl/_unit.c"
         "${CMAKE_SOURCE_DIR}/src/*.cpp"
 )
@@ -85,4 +86,4 @@ add_custom_command(
         DEPENDS ${PROJECT_NAME}
 )
 
-add_custom_target(package_fx ALL DEPENDS ${OUT_DIR}/${PKGARCH})
+add_custom_target(${PROJECT_NAME}_package ALL DEPENDS ${OUT_DIR}/${PKGARCH})

@@ -43,14 +43,37 @@ BSD 3-Clause License
   #include "usermodfx.h"
   #define FX_MAGIC {'U','M','O','D'}
   typedef user_modfx_hook_table_t fx_hook_table_t;
+  __attribute__((weak))
+  void _hook_process(const float *main_xn, float *main_yn,
+                     const float *sub_xn, float *sub_yn,
+                     uint32_t frames)
+  {
+    (void)main_xn;
+    (void)main_yn;
+    (void)sub_xn;
+    (void)sub_yn;
+    (void)frames;
+  }
 #elif defined(FX_TYPE_DEL)
   #include "userdelfx.h"
   #define FX_MAGIC {'U','D','E','L'}
   typedef user_delfx_hook_table_t fx_hook_table_t;
+  __attribute__((weak))
+  void _hook_process(float *main_xn, uint32_t frames)
+  {
+    (void)main_xn;
+    (void)frames;
+  }
 #elif defined(FX_TYPE_REV)
   #include "userrevfx.h"
   #define FX_MAGIC {'U','R','E','V'}
   typedef user_revfx_hook_table_t fx_hook_table_t;
+  __attribute__((weak))
+  void _hook_process(float *main_xn, uint32_t frames)
+  {
+    (void)main_xn;
+    (void)frames;
+  }
 #else
   #error "FX_TYPE_XXX not defined"
 #endif
@@ -133,18 +156,6 @@ void _hook_init(uint32_t platform, uint32_t api)
 {
   (void)platform;
   (void)api;
-}
-
-__attribute__((weak))
-void _hook_process(const float *main_xn, float *main_yn,
-                   const float *sub_xn, float *sub_yn,
-                   uint32_t frames)
-{
-  (void)main_xn;
-  (void)main_yn;
-  (void)sub_xn;
-  (void)sub_yn;
-  (void)frames;
 }
 
 __attribute__((weak))

@@ -1,21 +1,17 @@
 #pragma once
 
-#include "usermodfx.h"
-#include "math_util.hpp"
+#include "float_math.h"
+#include "FXBase.hpp"
 
 
-class PanFX{
+class PanFX : public FXBase {
 public:
-    void set_speed(const float speed);
-    void set_depth(const float depth);
-    float process_main_L(const float x);
-    float process_main_R(const float x);
-    float process_sub_R(const float x);
-    float process_sub_L(const float x);
+    void set_speed(const float speed) override;
+    void set_depth(const float depth) override;
+    float process_main_L(const float x) override;
+    float process_main_R(const float x) override;
 
 private:
-    float process_L(const float x);
-    float process_R(const float x);
     float pan_;
     float gain_;
 };

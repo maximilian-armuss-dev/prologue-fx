@@ -1,5 +1,5 @@
 ===== BUILD LOG FOR Clipper =====
-Mo 14 Apr 2025 19:53:05 CEST
+Mo 14 Apr 2025 20:38:08 CEST
 
 -- The C compiler identification is GNU 5.4.1
 -- The CXX compiler identification is GNU 5.4.1
@@ -15,45 +15,20 @@ Mo 14 Apr 2025 19:53:05 CEST
 -- Check for working CXX compiler: /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ - skipped
 -- Detecting CXX compile features
 -- Detecting CXX compile features - done
--- Configuring done (1.4s)
+-- Configuring done (1.3s)
 -- Generating done (0.0s)
 -- Build files have been written to: /Users/maxi/code/repos/prologue-fx/fx/Clipper/build
-[ 16%] 🔄 Updating manifest to FX type 'modfx'
+[ 16%] 🔄 Updating manifest to FX type 'delfx'
 [ 16%] Built target update_manifest
 [ 33%] Building CXX object CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
 [ 50%] Building C object CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-[ 66%] Building CXX object CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-[ 83%] Linking CXX executable Clipper.elf
-
-Cross Reference Table
-
-Symbol                                            File
-ClippingFX::process_main_L(float)                 CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-                                                  CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-ClippingFX::process_main_R(float)                 CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-                                                  CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-ClippingFX::process_signal(float)                 CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-ClippingFX::process_sub_L(float)                  CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-                                                  CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-ClippingFX::process_sub_R(float)                  CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-                                                  CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-ClippingFX::set_depth(float)                      CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-                                                  CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-ClippingFX::set_speed(float)                      CMakeFiles/Clipper.dir/src/ClippingFX.cpp.obj
-                                                  CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-__init_array_end                                  CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-__init_array_start                                CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-_bss_end                                          CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-_bss_start                                        CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-_entry                                            CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-_hook_init                                        CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-_hook_param                                       CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-_hook_process                                     CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/main.cpp.obj
-_hook_resume                                      CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-_hook_suspend                                     CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj/Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/bin/ld:/Users/maxi/code/repos/prologue-fx/fx/Clipper/../../shared/ld/usermodfx.ld:46: warning: redeclaration of memory region `SRAM'
-/Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/bin/ld:/Users/maxi/code/repos/prologue-fx/fx/Clipper/../../shared/ld/usermodfx.ld:47: warning: redeclaration of memory region `SDRAM'
-
-🔧 Generating Clipper.bin from ELF
-[ 83%] Built target Clipper
-[100%] 📦 Packaging Clipper.prlgunit into /Users/maxi/code/repos/prologue-fx/fx/Clipper/../../out
-[100%] Built target package_fx
+/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c:139:6: error: conflicting types for '_hook_process'
+ void _hook_process(const float *main_xn, float *main_yn,
+      ^
+In file included from /Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c:47:0:
+/Users/maxi/code/repos/prologue-fx/fx/Clipper/../../shared/inc/userdelfx.h:153:8: note: previous declaration of '_hook_process' was here
+   void _hook_process(float *xn, uint32_t frames);
+        ^
+make[2]: *** [CMakeFiles/Clipper.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj] Error 1
+make[1]: *** [CMakeFiles/Clipper.dir/all] Error 2
+make: *** [all] Error 2

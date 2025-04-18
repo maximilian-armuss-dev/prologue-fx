@@ -1,4 +1,4 @@
 {
-  "Clipper": "mod",
-  "Panner": "mod"
+  "Clipper": "del",
+  "Panner": "rev"
 }
