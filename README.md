@@ -85,20 +85,71 @@ The resulting `.prlgunit` files are saved to the `out/` directory.
 
 ## 🧩 Creating a New FX Plugin
 
-1. Create a new folder in `fx/`, e.g. `fx/MyNewEffect`
-2. Copy a `CMakeLists.txt` from another FX unit and adapt if needed
-3. Add your plugin name to `fx_config.json`, e.g.
+1. Duplicate another FX unit (like `Clipper`) and rename it, e.g. `MyNewEffect`
 
+2. Adapt the `manifest.json` (& `CMakeLists.txt` if needed)
+
+3. Add your plugin name to `fx_config.json`, and specify the FX module, e.g.
 ```json
 {
   "Clipper": "mod",
-  "Panner": "mod",
+  "Panner": "del",
   "MyNewEffect": "rev"
 }
 ```
 
-4. Run:
+4. Create your own source files in `fx/MyNewEffect/src`, e.g.
+```c++
+// MyNewEffect.hpp
+#pragma once
 
+#include "float_math.h"
+#include "FXBase.hpp"
+
+
+class MyNewEffectClass : public FXBase {
+public:
+    void set_speed(float speed) override;
+    void set_depth(float depth) override;
+    float process_main_L(float x) override;
+    float process_main_R(float x) override;
+
+private:
+    float speed_ = 0.5f;  // I recommend naming this after the parameters you actually want to control, e.g. "gain_", "pan_", etc.
+    float depth_ = 0.5f;
+};
+```
+> **Note:** Your class **must** inherit from `FXBase` (and thus override these methods)!
+```c++
+// MyNewEffect.cpp
+#include "MyNewEffect.hpp"
+
+
+void MyNewEffectClass::set_speed(const float speed) { speed_ = speed; }
+
+void MyNewEffectClass::set_depth(const float depth) { depth_ = 2 * depth; }
+
+float MyNewEffectClass::process_main_L(const float x) {
+    float processed_signal = x;         // TODO: Actual processing
+    return clip1m1f(processed_signal);  // It's always a good idea to throw on a clipper at the end 
+}
+
+float MyNewEffectClass::process_main_R(const float x) {
+    float processed_signal = x;         // TODO: Actual processing
+    return clip1m1f(processed_signal);  // It's always a good idea to throw on a clipper at the end 
+}
+```
+
+5. Create a new file `module_config.hpp` in your `fx/MyNewEffect/src/` folder and set FXClass to the name of your class:
+```c++
+#pragma once
+#include "MyNewEffect.hpp"
+
+using FXClass = MyNewEffectClass;
+```
+> **Note:** Although it may seem a bit ugly, it reduces the amount of boilerplate code significantly!
+> Have a look at `shared/wrappers/FXWrapper` if you're interested in the inner workings! :)
+6. Simply run:
 ```bash
 ./build.sh MyNewEffect
 ```
