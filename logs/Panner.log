@@ -1,17 +1,33 @@
 ===== BUILD LOG FOR Panner =====
-Sa 19 Apr 2025 01:49:33 CEST
+Sa 19 Apr 2025 02:01:50 CEST
 
--- Configuring done (0.0s)
+-- The C compiler identification is GNU 5.4.1
+-- The CXX compiler identification is GNU 5.4.1
+-- The ASM compiler identification is GNU
+-- Found assembler: /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc
+-- Detecting C compiler ABI info
+-- Detecting C compiler ABI info - done
+-- Check for working C compiler: /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc - skipped
+-- Detecting C compile features
+-- Detecting C compile features - done
+-- Detecting CXX compiler ABI info
+-- Detecting CXX compiler ABI info - done
+-- Check for working CXX compiler: /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ - skipped
+-- Detecting CXX compile features
+-- Detecting CXX compile features - done
+-- Configuring done (1.4s)
 -- Generating done (0.0s)
 -- Build files have been written to: /Users/maxi/code/repos/prologue-fx/fx/Panner/build
-[ 16%] 🔄 Updating manifest to FX type 'revfx'
+[ 16%] 🔄 Updating manifest to FX type 'modfx'
 [ 16%] Built target update_manifest
-[ 33%] Building CXX object CMakeFiles/Panner.dir/Users/maxi/code/repos/prologue-fx/shared/main_revfx.cpp.obj
-[ 50%] Linking CXX executable Panner.elf
-/Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/bin/ld:/Users/maxi/code/repos/prologue-fx/fx/Panner/../../shared/ld/userrevfx.ld:46: warning: redeclaration of memory region `SRAM'
-/Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/bin/ld:/Users/maxi/code/repos/prologue-fx/fx/Panner/../../shared/ld/userrevfx.ld:47: warning: redeclaration of memory region `SDRAM'
-CMakeFiles/Panner.dir/Users/maxi/code/repos/prologue-fx/shared/main_revfx.cpp.obj: In function `__static_initialization_and_destruction_0':
-/Users/maxi/code/repos/prologue-fx/shared/main_revfx.cpp:6: undefined reference to `__dso_handle'
+[ 33%] Building CXX object CMakeFiles/Panner.dir/Users/maxi/code/repos/prologue-fx/shared/main_modfx.cpp.obj
+[ 50%] Building C object CMakeFiles/Panner.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
+[ 66%] Building CXX object CMakeFiles/Panner.dir/src/PanFX.cpp.obj
+[ 83%] Linking CXX executable Panner.elf
+/Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/bin/ld:/Users/maxi/code/repos/prologue-fx/fx/Panner/../../shared/ld/usermodfx.ld:46: warning: redeclaration of memory region `SRAM'
+/Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/bin/ld:/Users/maxi/code/repos/prologue-fx/fx/Panner/../../shared/ld/usermodfx.ld:47: warning: redeclaration of memory region `SDRAM'
+CMakeFiles/Panner.dir/Users/maxi/code/repos/prologue-fx/shared/main_modfx.cpp.obj: In function `__static_initialization_and_destruction_0':
+/Users/maxi/code/repos/prologue-fx/shared/main_modfx.cpp:6: undefined reference to `__dso_handle'
 /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/lib/armv7e-m/fpu/libg.a(lib_a-sbrkr.o): In function `_sbrk_r':
 sbrkr.c:(.text._sbrk_r+0xc): undefined reference to `_sbrk'
 /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/../lib/gcc/arm-none-eabi/5.4.1/../../../../arm-none-eabi/bin/ld: Panner.elf: hidden symbol `__dso_handle' isn't defined
