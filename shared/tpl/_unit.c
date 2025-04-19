@@ -59,9 +59,9 @@ BSD 3-Clause License
   #define FX_MAGIC {'U','D','E','L'}
   typedef user_delfx_hook_table_t fx_hook_table_t;
   __attribute__((weak))
-  void _hook_process(float *main_xn, uint32_t frames)
+  void _hook_process(float *xn, uint32_t frames)
   {
-    (void)main_xn;
+    (void)xn;
     (void)frames;
   }
 #elif defined(FX_TYPE_REV)
@@ -69,9 +69,9 @@ BSD 3-Clause License
   #define FX_MAGIC {'U','R','E','V'}
   typedef user_revfx_hook_table_t fx_hook_table_t;
   __attribute__((weak))
-  void _hook_process(float *main_xn, uint32_t frames)
+  void _hook_process(float *xn, uint32_t frames)
   {
-    (void)main_xn;
+    (void)xn;
     (void)frames;
   }
 #else

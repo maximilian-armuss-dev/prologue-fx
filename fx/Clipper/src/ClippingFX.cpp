@@ -9,11 +9,9 @@ void ClippingFX::set_speed(const float speed)  {
     shape_fn_ = get_shaper(mode);
 }
 
-
 void ClippingFX::set_depth(const float depth)  {
     gain_ = gain_factor_ * depth;
 }
-
 
 float ClippingFX::process_signal(const float x) {
     float in_signal = x * gain_;
@@ -21,8 +19,5 @@ float ClippingFX::process_signal(const float x) {
     return clip1m1f(shaped_signal);
 }
 
-
 float ClippingFX::process_main_L(const float x) { return process_signal(x); }
 float ClippingFX::process_main_R(const float x) { return process_signal(x); }
-float ClippingFX::process_sub_L(const float x) { return process_signal(x); }
-float ClippingFX::process_sub_R(const float x) { return process_signal(x); }

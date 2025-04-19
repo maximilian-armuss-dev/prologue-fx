@@ -6,12 +6,12 @@
 
 class PanFX : public FXBase {
 public:
-    void set_speed(const float speed) override;
-    void set_depth(const float depth) override;
-    float process_main_L(const float x) override;
-    float process_main_R(const float x) override;
+    void set_speed(float speed) override;
+    void set_depth(float depth) override;
+    float process_main_L(float x) override;
+    float process_main_R(float x) override;
 
 private:
-    float pan_;
-    float gain_;
+    float pan_ = 0.5f;
+    float gain_ = 0.5f;
 };

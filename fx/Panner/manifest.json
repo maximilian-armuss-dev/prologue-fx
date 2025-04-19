@@ -1,13 +1,12 @@
 {
-    "header" : 
-    {
-        "platform" : "prologue",
-        "module" : "modfx",
-        "api" : "1.1-0",
-        "dev_id" : 0,
-        "prg_id" : 0,
-        "version" : "1.0-0",
-        "name" : "pan",
-        "num_param" : 0
-    }
+  "header": {
+    "platform": "prologue",
+    "module": "modfx",
+    "api": "1.1-0",
+    "dev_id": 0,
+    "prg_id": 0,
+    "version": "1.6-0",
+    "name": "Panner",
+    "num_param": 0
+  }
 }

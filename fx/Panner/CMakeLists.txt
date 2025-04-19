@@ -31,13 +31,6 @@ set(CMAKE_C_FLAGS "${MCFLAGS} ${TOPT} ${OPT_FLAGS} -std=c11 -mstructure-size-bou
 set(CMAKE_CXX_FLAGS "${MCFLAGS} ${TOPT} ${OPT_FLAGS} -std=c++11 -fno-rtti -fno-exceptions -fno-non-call-exceptions")
 set(CMAKE_ASM_FLAGS "${MCFLAGS} ${TOPT} -x assembler-with-cpp")
 
-# --- Update manifest.json
-add_custom_target(update_manifest ALL
-        COMMENT "🔄 Updating manifest to FX type '${FX_TYPE_LOWER}fx'"
-        COMMAND ${TOOLS_DIR}/update_manifest.sh ${FX_TYPE_LOWER}
-        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-)
-
 # --- Include directories
 include_directories(
         ${CMAKE_SOURCE_DIR}/src
