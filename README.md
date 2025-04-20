@@ -1,48 +1,44 @@
-# 🎛️ Prologue‑FX‑Suite
+# 🎛️ Prologue‑FX Framework
 
 🚧 **Under Active Construction** – expect rapid changes, renamed folders, and the occasional exploding build.
 
-## 📌 Overview
+## 🙄 The Problem with KORG's [logue-SDK](https://github.com/korginc/logue-sdk)...
 
-**Prologue‑FX‑Suite** is a **modern, simplified toolchain** for developing custom FX units using:
+A **LOT** of boilerplate code ─ this repository probably contains more duplicate lines of code than original ones.
 
-- A clean, CMake-based build system
-- Shared modular C++ FX framework
-- Easy-to-use CLI scripts
-- Automatic FX slot configuration
+Let's take a quick look into their [template for a modulation effect](https://github.com/korginc/logue-sdk/tree/master/platform/prologue/dummy-modfx):
+```
+dummy-modfx/
+├── ld/                            
+│   ├── main_api.syms
+│   ├── rules.ld
+│   └── usermodfx.ld
+│ 
+├── tpl/
+│   └── _unit.c
+│
+├── Makefile
+├── manifest.json
+└── project.mk
+```
+➡️ **A lot of files, but yet no source code!**
 
-It also features some of the FX I wrote for my prologue :)
-## 🌟 Unique Selling Point (USP)
+## 🤩 The Solution ─ ✨ This Framework ✨
 
-This suite offers a **framework-first approach** to effect development:
+In contrast to the original logue-SDK, this framework offers a **framework-first approach** to effect development:
 
 - Inherit from `FXBase`, implement your logic – you’re done.
-- Fully abstracted build logic and slot setup
+- Build for **any** FX slot (mod/rev/del) on the prologue 
 - Boilerplate-free development with reusable utilities
 - One-command build to `.prlgunit`
 
-## 🎯 Project Goals
-
-| Status | Goal                                                       |
-|--------|------------------------------------------------------------|
-| ✅     | `FXBase` framework for minimal user code                   |
-| ✅     | Build for **any** FX slot (mod/rev/del) on the prologue    |
-| ✅     | Fully CMake-powered build setup (no Docker)                |
-| ✅     | User-friendly bash build system + manifest auto-versioning |
-| ⏳     | GitHub Actions CI to build all FX units                    |
-
-> **Note:** We do not ship pre‑compiled binaries.  
-> Build scripts generate the `*.prlgunit` files locally so you can audit and tweak the code yourself.
-
-## 🛠️ Repository Setup
-
-```bash
-# 1. Clone the repo and its submodules (includes CMSIS + logue-SDK)
-git clone --recurse-submodules https://github.com/maximilian-armuss-dev/prologue-fx-suite.git
-cd prologue-fx-suite
+➡️ **Look at how much cleaner this has become**:
 ```
-
-> 📦 The `CMSIS` module is included as a submodule (see `.gitmodules`).
+<Effect>/
+├── src/                   
+├── CMakeLists.txt         
+└── manifest.json     
+```
 
 ## 🧪 Project Structure
 
@@ -70,18 +66,15 @@ prologue-fx-suite/
 └── README.md
 ```
 
-## ⚙️ Building Effects
+## 🛠️ Repository Setup
 
-| Task                      | Command                            |
-|---------------------------|------------------------------------|
-| Build single effect       | `./build.sh <effect-name>`         |
-| Clean & rebuild           | `./build.sh <effect-name> --clean` |
-| Build all FX              | `./build.sh --all`                 |
-| Build all FX from scratch | `./build.sh --all --clean`         |
+```bash
+# 1. Clone the repo and its submodules (includes CMSIS + logue-SDK)
+git clone --recurse-submodules https://github.com/maximilian-armuss-dev/prologue-fx.git
+cd prologue-fx
+```
 
-The resulting `.prlgunit` files are saved to the `out/` directory.
-
-> **Important:** Use either [logue-cli](https://github.com/korginc/logue-cli) or the [prologue sound librarian](https://www.korg.com/us/support/download/software/0/778/3995/) to upload FX to your synth:  
+> 📦 The `CMSIS` module is included as a submodule (see `.gitmodules`).
 
 ## 🧩 Creating a New FX Plugin
 
@@ -140,7 +133,7 @@ float MyNewEffectClass::process_main_R(const float x) {
 }
 ```
 
-5. Create a new file `module_config.hpp` in your `fx/MyNewEffect/src/` folder and set FXClass to the name of your class:
+5. Set FXClass to the name of your class in `module_config.hpp`
 ```c++
 #pragma once
 #include "MyNewEffect.hpp"
@@ -149,12 +142,21 @@ using FXClass = MyNewEffectClass;
 ```
 > **Note:** Although it may seem a bit ugly, it reduces the amount of boilerplate code significantly!
 > Have a look at `shared/wrappers/FXWrapper` if you're interested in the inner workings! :)
-6. Simply run:
-```bash
-./build.sh MyNewEffect
-```
+6. Build :)
 
-🎉 Your `.prlgunit` will appear in the `out/` folder.
+## ⚙️ Building
+From the root directory of your repository, build using:
+
+| Task                      | Command                            |
+|---------------------------|------------------------------------|
+| Build single effect       | `./build.sh <effect-name>`         |
+| Clean & rebuild           | `./build.sh <effect-name> --clean` |
+| Build all FX              | `./build.sh --all`                 |
+| Build all FX from scratch | `./build.sh --all --clean`         |
+
+The resulting `.prlgunit` files are saved to the `out/` directory.
+
+> **Important:** Use either [logue-cli](https://github.com/korginc/logue-cli) or the [prologue sound librarian](https://www.korg.com/us/support/download/software/0/778/3995/) to upload FX to your synth!
 
 ---
 ## 📬 Contact
