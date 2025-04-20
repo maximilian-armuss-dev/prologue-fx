@@ -4,7 +4,7 @@
 
 ## 🙄 The Problem with KORG's [logue-SDK](https://github.com/korginc/logue-sdk)...
 
-A **LOT** of boilerplate code ─ this repository probably contains more duplicate lines of code than original ones.
+A **LOT** of boilerplate code ─ their repository probably contains more duplicate lines of code than original ones.
 
 Let's take a quick look into their [template for a modulation effect](https://github.com/korginc/logue-sdk/tree/master/platform/prologue/dummy-modfx):
 ```
@@ -27,15 +27,15 @@ dummy-modfx/
 
 In contrast to the original logue-SDK, this framework offers a **framework-first approach** to effect development:
 
-- Inherit from `FXBase`, implement your logic – you’re done.
+- Inherit from `FXBase`, implement your FX logic – you’re done.
 - Build for **any** FX slot (mod/rev/del) on the prologue 
 - Boilerplate-free development with reusable utilities
 - One-command build to `.prlgunit`
 
 ➡️ **Look at how much cleaner this has become**:
 ```
-<Effect>/
-├── src/                   
+dummy-modfx/
+├── src/                           # Also, this folder is new ;)        
 ├── CMakeLists.txt         
 └── manifest.json     
 ```
@@ -69,7 +69,7 @@ prologue-fx-suite/
 ## 🛠️ Repository Setup
 
 ```bash
-# 1. Clone the repo and its submodules (includes CMSIS + logue-SDK)
+# Clone the repo and its submodules
 git clone --recurse-submodules https://github.com/maximilian-armuss-dev/prologue-fx.git
 cd prologue-fx
 ```
