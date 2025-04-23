@@ -1,44 +1,21 @@
-# 🎛️ Prologue‑FX Framework
+# 🎛️ The *PrologueFX* Framework
 
-🚧 **Under Active Construction** – expect rapid changes, renamed folders, and the occasional exploding build.
+PrologueFX is a cleaner, more efficient way to build custom FX for KORG logue synths.
+It removes boilerplate from the logue-SDK and lets you focus entirely on your DSP logic.
 
-## 🙄 The Problem with KORG's [logue-SDK](https://github.com/korginc/logue-sdk)...
+![Prologue 8](prologue-8.png)
 
-A **LOT** of boilerplate code ─ their repository probably contains more duplicate lines of code than original ones.
+## ⚔️ logue-SDK vs. PrologueFX 
 
-Let's take a quick look into their [template for a modulation effect](https://github.com/korginc/logue-sdk/tree/master/platform/prologue/dummy-modfx):
-```
-dummy-modfx/
-├── ld/                            
-│   ├── main_api.syms
-│   ├── rules.ld
-│   └── usermodfx.ld
-│ 
-├── tpl/
-│   └── _unit.c
-│
-├── Makefile
-├── manifest.json
-└── project.mk
-```
-➡️ **A lot of files, but yet no source code!**
+| 🛑 Pain in KORG's [logue-SDK](https://github.com/korginc/logue-sdk)                                                                                               | ✅ How PrologueFX fixes it                                                                                                                                                                       |
+|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Redundant boilerplate** – every new effect needs **7 near-identical files** (linker script, glue C, wrapper C++, etc.).                                         | **Zero boilerplate** – all shared scaffolding lives in `shared/`. A fresh effect folder only holds **`CMakeLists.txt` + `manifest.json` + your own source**. Nothing to copy, nothing to tweak. |
+| Must implement **3 C-style callbacks** (`MODFX_INIT / PROCESS / PARAM`) **by hand**. To keep code tidy you end up writing an *extra* file and wiring it yourself. | Just inherit `FXBase`, override its virtual methods, done. The framework auto-generates the mandatory callbacks and hooks your class in.                                                        |
+| Different effect slots (Mod, Rev, Del) use **different function signatures**, so you usually duplicate projects when you want the same DSP in another slot.       | One line in **`fx_config.json`** chooses the slot: `"Clipper": "rev"`. Change it to `"mod"` or `"del"` and rebuild – the wrapper adapts the signatures automatically.                           |
+| Typical workflow relies on diving into the Docker container and running Make by hand.                                                                             | Top-level **`build.sh`** script, with clean build and build-all options. All finished `.prlgunit` files are collected in **`out/`**, so you never hunt through build folders.                   |
 
-## 🤩 The Solution ─ ✨ This Framework ✨
+> **Bottom line:** PrologueFX keeps the power of the logue-SDK but strips away the busy-work. Focus on DSP, not on scaffolding.
 
-In contrast to the original logue-SDK, this framework offers a **framework-first approach** to effect development:
-
-- Inherit from `FXBase`, implement your FX logic – you’re done.
-- Build for **any** FX slot (mod/rev/del) on the prologue 
-- Boilerplate-free development with reusable utilities
-- One-command build to `.prlgunit`
-
-➡️ **Look at how much cleaner this has become**:
-```
-dummy-modfx/
-├── src/                           # Also, this folder is new ;)        
-├── CMakeLists.txt         
-└── manifest.json     
-```
 
 ## 🧪 Project Structure
 
