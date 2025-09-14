@@ -60,3 +60,9 @@ tools/emscripten/emsdk
 # Debug files
 *.dSYM/
 *.su
+
+.DS_Store
+.idea/
+.vscode/
+cmake-build-debug/
+CMSIS/

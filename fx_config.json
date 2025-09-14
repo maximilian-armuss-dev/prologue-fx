@@ -1,4 +1,5 @@
 {
   "Clipper": "mod",
-  "Panner": "mod"
+  "Panner": "mod",
+  "MoogFilter": "mod"
 }

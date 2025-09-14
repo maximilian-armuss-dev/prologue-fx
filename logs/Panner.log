@@ -1,28 +1,12 @@
 ===== BUILD LOG [Panner] =====
-So 20 Apr 2025 00:41:37 CEST
+Sun Sep 14 23:44:33 CEST 2025
 
-[38;2;255;255;255m[INFO][0m    manifest updated → name=Panner  module=modfx  version=1.6-0
--- The C compiler identification is GNU 5.4.1
--- The CXX compiler identification is GNU 5.4.1
--- The ASM compiler identification is GNU
--- Found assembler: /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc
--- Detecting C compiler ABI info
--- Detecting C compiler ABI info - done
--- Check for working C compiler: /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-gcc - skipped
--- Detecting C compile features
--- Detecting C compile features - done
--- Detecting CXX compiler ABI info
--- Detecting CXX compiler ABI info - done
--- Check for working CXX compiler: /Users/maxi/code/repos/prologue-fx/tools/gcc/gcc-arm-none-eabi-5_4-2016q3/bin/arm-none-eabi-g++ - skipped
--- Detecting CXX compile features
--- Detecting CXX compile features - done
--- Configuring done (1.2s)
+[38;2;255;255;255m[INFO][0m    manifest updated → name=Panner  module=modfx  version=1.11-0
+-- Configuring done (0.0s)
 -- Generating done (0.0s)
 -- Build files have been written to: /Users/maxi/code/repos/prologue-fx/fx/Panner/build
-[ 20%] Building CXX object CMakeFiles/Panner.dir/Users/maxi/code/repos/prologue-fx/shared/main_modfx.cpp.obj
-[ 40%] Building C object CMakeFiles/Panner.dir/Users/maxi/code/repos/prologue-fx/shared/tpl/_unit.c.obj
-[ 60%] Building CXX object CMakeFiles/Panner.dir/src/PanFX.cpp.obj
-[ 80%] Linking CXX executable Panner.elf
+[ 20%] Building CXX object CMakeFiles/Panner.dir/src/PanFX.cpp.obj
+[ 40%] Linking CXX executable Panner.elf
 
 Cross Reference Table
 
