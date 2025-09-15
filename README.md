@@ -9,7 +9,7 @@ It removes boilerplate from the logue-SDK and lets you focus entirely on your DS
 
 | 🛑 Pain in KORG's [logue-SDK](https://github.com/korginc/logue-sdk)                                                                                               | ✅ How PrologueFX fixes it                                                                                                                                                                       |
 |-------------------------------------------------------------------------------------------------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Redundant boilerplate** – every new effect needs **7 near-identical files** (linker script, glue C, wrapper C++, etc.).                                         | **Zero boilerplate** – all shared scaffolding lives in `shared/`. A fresh effect folder only holds **`CMakeLists.txt` + `manifest.json` + your own source**. Nothing to copy, nothing to tweak. |
+| **Redundant boilerplate** – every new effect needs **7 near-identical files** (linker script, glue C, wrapper C++, etc.).                                         | **Zero boilerplate** – all shared scaffolding lives in `shared/`. A fresh effect folder only holds **`CMakeLists.txt` + `manifest.json` + your own source**. During the build process, a `main.cpp` is automatically generated, so you only need to focus on your source code. |
 | Must implement **3 C-style callbacks** (`MODFX_INIT / PROCESS / PARAM`) **by hand**. To keep code tidy you end up writing an *extra* file and wiring it yourself. | Just inherit `FXBase`, override its virtual methods, done. The framework auto-generates the mandatory callbacks and hooks your class in.                                                        |
 | Different effect slots (Mod, Rev, Del) use **different function signatures**, so you usually duplicate projects when you want the same DSP in another slot.       | One line in **`fx_config.json`** chooses the slot: `"Clipper": "rev"`. Change it to `"mod"` or `"del"` and rebuild – the wrapper adapts the signatures automatically.                           |
 | Typical workflow relies on diving into the Docker container and running Make by hand.                                                                             | Top-level **`build.sh`** script, with clean build and build-all options. All finished `.prlgunit` files are collected in **`out/`**, so you never hunt through build folders.                   |
@@ -55,7 +55,7 @@ cd prologue-fx
 
 ## 🧩 Creating a New FX Plugin
 
-1. Duplicate another FX unit (like `Clipper`) and rename it, e.g. `MyNewEffect`
+1. Duplicate another FX unit (like `Clipper`) and rename it, e.g. `MyNewReverb`
 
 2. Adapt the `manifest.json` (& `CMakeLists.txt` if needed)
 
@@ -64,20 +64,21 @@ cd prologue-fx
 {
   "Clipper": "mod",
   "Panner": "del",
-  "MyNewEffect": "rev"
+  "MyNewReverb": "rev"
 }
 ```
 
-4. Create your own source files in `fx/MyNewEffect/src`, e.g.
+4. Create your own source files in `fx/MyNewReverb/src`
+> **Note:** The filenames of your source files must follow the convention `<EffectName>FX.cpp` and `<EffectName>FX.hpp` (e.g., `MyNewReverbFX.cpp` and `MyNewReverbFX.hpp`), where `<EffectName>` is the name of your parent folder.
 ```c++
-// MyNewEffect.hpp
+// MyNewReverbFX.hpp
 #pragma once
 
 #include "float_math.h"
 #include "FXBase.hpp"
 
 
-class MyNewEffectClass : public FXBase {
+class MyNewReverbFX : public FXBase {
 public:
     void set_speed(float speed) override;
     void set_depth(float depth) override;
@@ -85,41 +86,32 @@ public:
     float process_main_R(float x) override;
 
 private:
-    float speed_ = 0.5f;  // I recommend naming this after the parameters you actually want to control, e.g. "gain_", "pan_", etc.
+    float speed_ = 0.5f;  // I recommend naming this after the parameters you actually want to control, e.g. "size_", "decay_", etc.
     float depth_ = 0.5f;
 };
 ```
 > **Note:** Your class **must** inherit from `FXBase` (and thus override these methods)!
 ```c++
-// MyNewEffect.cpp
-#include "MyNewEffect.hpp"
+// MyNewReverb.cpp
+#include "MyNewReverbFX.hpp"
 
 
-void MyNewEffectClass::set_speed(const float speed) { speed_ = speed; }
+void MyNewReverbFX::set_speed(const float speed) { speed_ = speed; }
 
-void MyNewEffectClass::set_depth(const float depth) { depth_ = 2 * depth; }
+void MyNewReverbFX::set_depth(const float depth) { depth_ = 2 * depth; }
 
-float MyNewEffectClass::process_main_L(const float x) {
+float MyNewReverbFX::process_main_L(const float x) {
     float processed_signal = x;         // TODO: Actual processing
     return clip1m1f(processed_signal);  // It's always a good idea to throw on a clipper at the end 
 }
 
-float MyNewEffectClass::process_main_R(const float x) {
+float MyNewReverbFX::process_main_R(const float x) {
     float processed_signal = x;         // TODO: Actual processing
     return clip1m1f(processed_signal);  // It's always a good idea to throw on a clipper at the end 
 }
 ```
 
-5. Set FXClass to the name of your class in `module_config.hpp`
-```c++
-#pragma once
-#include "MyNewEffect.hpp"
-
-using FXClass = MyNewEffectClass;
-```
-> **Note:** Although it may seem a bit ugly, it reduces the amount of boilerplate code significantly!
-> Have a look at `shared/wrappers/FXWrapper` if you're interested in the inner workings! :)
-6. Build :)
+5. Build :)
 
 ## ⚙️ Building
 From the root directory of your repository, build using:
