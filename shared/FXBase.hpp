@@ -3,6 +3,8 @@
 // Missing virtual destructor as it leads to compile errors
 class FXBase {
 public:
+    virtual void init() = 0;
+    virtual void reset() = 0;
     virtual void set_speed(float speed) = 0;
     virtual void set_depth(float depth) = 0;
     virtual float process_main_L(float x) = 0;

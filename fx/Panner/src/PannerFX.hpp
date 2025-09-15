@@ -4,8 +4,10 @@
 #include "FXBase.hpp"
 
 
-class PanFX : public FXBase {
+class PannerFX : public FXBase {
 public:
+    void init() override;
+    void reset() override;
     void set_speed(float speed) override;
     void set_depth(float depth) override;
     float process_main_L(float x) override;

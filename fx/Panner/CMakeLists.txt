@@ -44,7 +44,7 @@ include_directories(
 
 # --- Source files
 file(GLOB_RECURSE CSRC
-        "${SHARED_DIR}/main_${FX_TYPE_LOWER}fx.cpp"
+        "${CMAKE_SOURCE_DIR}/src/main.cpp"
         "${SHARED_DIR}/tpl/_unit.c"
         "${CMAKE_SOURCE_DIR}/src/*.cpp"
 )

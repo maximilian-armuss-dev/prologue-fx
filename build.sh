@@ -18,9 +18,29 @@ FX_DIR="$ROOT_DIR/fx"
 CONFIG_FILE="$ROOT_DIR/fx_config.json"
 LOG_DIR="$ROOT_DIR/logs"
 mkdir -p "$LOG_DIR"
+TEMPLATES_DIR="$ROOT_DIR/shared/templates"
 
 # ─────────────────────── helper: read fx‑type from json ────────────────── #
 get_fx_type() { jq -r --arg k "$1" '.[$k] // empty' "$CONFIG_FILE"; }
+
+# ─────────────────────── helper: generate main.cpp ─────────────────────── #
+generate_main_cpp() {
+    local project_dir="$1" proj_name="$2" fx_type="$3"
+    local template_file="$TEMPLATES_DIR/main_${fx_type}fx.cpp.in"
+    local output_file="$project_dir/src/main.cpp"
+
+    [[ -f "$template_file" ]] || { error "Main.cpp template missing for $fx_type"; return 1; }
+
+    info "Generating main.cpp for '$proj_name' (FX_TYPE=$fx_type)"
+    # Ersetze Platzhalter: <%PLUGIN_NAME%> (für den Dateinamen z.B. ClippingFX.hpp) und <%PLUGIN_CLASS_NAME%> (für den Klassennamen z.B. ClippingFX)
+    sed -e "s/<%PLUGIN_NAME%>/${proj_name}/g" \
+        -e "s/<%PLUGIN_CLASS_NAME%>/${proj_name}FX/g" \
+        "$template_file" > "$output_file"
+    
+    if [[ ! -f "$output_file" ]]; then
+        error "Failed to generate main.cpp for $proj_name"; return 1
+    fi
+}
 
 # ──────────────────────── helper: bump & patch manifest ────────────────── #
 update_manifest() {
@@ -89,6 +109,11 @@ build_one_fx() {
         error "Manifest update failed for $name – see $log_file"; return 1
     fi
 
+    # Step 1.5: Generate main.cpp
+    if ! generate_main_cpp "$dir" "$name" "$fx_type" >> "$log_file" 2>&1; then
+        error "main.cpp generation failed for $name – see $log_file"; return 1
+    fi
+
     # Step 2: Configure CMake
     if ! cmake -S "$dir" \
                -B "$build_dir" \
@@ -104,6 +129,13 @@ build_one_fx() {
 
     success "$name built successfully"
     echo
+
+    # Step 4: Clean up generated main.cpp
+    local generated_main_cpp="$dir/src/main.cpp"
+    if [[ -f "$generated_main_cpp" ]]; then
+        info "Cleaning up generated main.cpp for '$name'"
+        rm -f "$generated_main_cpp"
+    fi
 }
 
 # ─────────────────────────── argument parsing ──────────────────────────── #

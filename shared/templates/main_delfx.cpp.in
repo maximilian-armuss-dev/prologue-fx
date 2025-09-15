@@ -1,0 +1,42 @@
+#include "<%PLUGIN_NAME%>FX.hpp"
+#include "userdelfx.h"
+#include "fixed_math.h"
+
+static <%PLUGIN_CLASS_NAME%> s_plugin_dsp;
+
+void DELFX_INIT(uint32_t platform, uint32_t api) {
+    (void)platform;
+    (void)api;
+    s_plugin_dsp.reset();
+}
+
+void DELFX_PARAM(uint8_t index, int32_t value) {
+    float f32_val = q31_to_f32(value);
+    switch (index) {
+        case k_user_delfx_param_time: s_plugin_dsp.set_speed(f32_val); break;
+        case k_user_delfx_param_depth: s_plugin_dsp.set_depth(f32_val); break;
+        default: break;
+    }
+}
+
+void DELFX_PROCESS(const float* main_xn, float* main_yn,
+                   const float* sub_xn, float* sub_yn,
+                   uint32_t frames) {
+    const float * main_buffer_in = main_xn;
+    float * __restrict main_buffer_out = main_yn;
+    const float * sub_buffer_in = sub_xn;
+    float * __restrict sub_buffer_out = sub_yn;
+
+    const float * endptr = main_buffer_out + 2 * frames;
+
+    for (; main_buffer_out < endptr;) {
+        *(main_buffer_out++) = s_plugin_dsp.process_main_L(*(main_buffer_in++));
+        *(main_buffer_out++) = s_plugin_dsp.process_main_R(*(main_buffer_in++));
+        *(sub_buffer_out++) = s_plugin_dsp.process_sub_L(*(sub_buffer_in++));
+        *(sub_buffer_out++) = s_plugin_dsp.process_sub_R(*(sub_buffer_in++));
+    }
+}
+
+void DELFX_SUSPEND(void) { }
+
+void DELFX_RESUME(void) { s_plugin_dsp.reset(); }

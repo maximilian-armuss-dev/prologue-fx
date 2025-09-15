@@ -66,3 +66,4 @@ tools/emscripten/emsdk
 .vscode/
 cmake-build-debug/
 CMSIS/
+logs/

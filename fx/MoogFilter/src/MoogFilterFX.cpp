@@ -1,7 +1,8 @@
 #include "MoogFilterFX.hpp"
 
 
-MoogFilterFX::MoogFilterFX() {
+void MoogFilterFX::init(){
+    filter_coefficient_ = 0;
     for (int i = 0; i < 4; ++i) {
         filter_stages_L_[i] = 0.0f;
         filter_stages_R_[i] = 0.0f;
@@ -9,7 +10,11 @@ MoogFilterFX::MoogFilterFX() {
     last_sample_L_ = 0.0f;
     last_sample_R_ = 0.0f;
     set_speed(0.5f);
-    set_depth(0.0f);
+    set_depth(1.0f);
+}
+
+void MoogFilterFX::reset(){
+    init();
 }
     
 void MoogFilterFX::set_speed(const float speed) {
