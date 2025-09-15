@@ -1,9 +1,0 @@
-===== BUILD LOG [Clipper] =====
-Sun Sep 14 23:44:32 CEST 2025
-
-[38;2;255;255;255m[INFO][0m    manifest updated → name=Clipper  module=modfx  version=1.31-0
--- Configuring done (0.0s)
--- Generating done (0.0s)
--- Build files have been written to: /Users/maxi/code/repos/prologue-fx/fx/Clipper/build
-[ 75%] Built target Clipper
-[100%] Built target Clipper_package
