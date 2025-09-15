@@ -80,12 +80,12 @@ build_one_fx() {
         info "Cleaning previous build of '$name'"; rm -rf "$build_dir";
     }
 
-    info "Building '$name' (FX_TYPE=$fx_type)  → $log_file"
-    echo "===== BUILD LOG [$name] =====" >"$log_file"
-    date >>"$log_file"; echo >>"$log_file"
+    info "Building '$name' (FX_TYPE=$fx_type) → $log_file"
+    echo "===== BUILD LOG [$name] =====" > "$log_file"
+    date >> "$log_file"; echo >> "$log_file"
 
     # Step 1: Update manifest
-    if ! update_manifest "$dir" "$fx_type" >>"$log_file" 2>&1; then
+    if ! update_manifest "$dir" "$fx_type" >> "$log_file" 2>&1; then
         error "Manifest update failed for $name – see $log_file"; return 1
     fi
 
@@ -93,12 +93,12 @@ build_one_fx() {
     if ! cmake -S "$dir" \
                -B "$build_dir" \
                -DCMAKE_TOOLCHAIN_FILE="$TOOLCHAIN_FILE" \
-               -DFX_TYPE="$fx_type"  >>"$log_file" 2>&1; then
+               -DFX_TYPE="$fx_type" >> "$log_file" 2>&1; then
         error "CMake configure failed for $name – see $log_file"; return 1
     fi
 
     # Step 3: Build
-    if ! cmake --build "$build_dir" --target all >>"$log_file" 2>&1; then
+    if ! cmake --build "$build_dir" --target all >> "$log_file" 2>&1; then
         error "Build failed for $name – see $log_file"; return 1
     fi
 
@@ -116,7 +116,7 @@ CLEAN=${2:-}       #   --clean | ""
 if [[ "$TARGET" == "--all" ]]; then
     info "Building all FX projects listed in $CONFIG_FILE"
     for dir in "$FX_DIR"/*/; do
-        [[ -f "$dir/CMakeLists.txt" ]] || continue
+        [[ -f "$dir/CMakeLists.txt" ]] || (info "Skipping $dir" && continue)
         build_one_fx "$dir" "$CLEAN" || exit 1
     done
 else
