@@ -22,22 +22,18 @@ void ClipperFX::set_depth(const float depth)  {
     gain_ = gain_factor_ * depth;
 }
 
-float ClipperFX::process_signal(const float x) {
-    float in_signal = x * gain_;
-    float shaped_signal = shape_fn_(in_signal) / gain_factor_;
-    return clip1m1f(shaped_signal);
+void ClipperFX::process_signal(float* main_frames, uint32_t frame_count) {
+    for (uint32_t i = 0; i < frame_count; ++i) {
+        float in_signal = main_frames[i] * gain_;
+        float shaped_signal = shape_fn_(in_signal) / gain_factor_;
+        main_frames[i] = clip1m1f(shaped_signal);
+    }
 }
 
-bool ClipperFX::process_main_L(float* main_frames_L, uint32_t frames) {
-    for (uint32_t i = 0; i < frames; ++i) {
-        main_frames_L[i] = shaper_func(main_frames_L[i]);
-    }
-    return true;
+void ClipperFX::process_main_L(float* main_frames_L, uint32_t frame_count) {
+    process_signal(main_frames_L, frame_count);
 }
 
-bool ClipperFX::process_main_R(float* main_frames_R, uint32_t frames) {
-    for (uint32_t i = 0; i < frames; ++i) {
-        main_frames_R[i] = shaper_func(main_frames_R[i]);
-    }
-    return true;
+void ClipperFX::process_main_R(float* main_frames_R, uint32_t frame_count) {
+    process_signal(main_frames_R, frame_count);
 }
