@@ -28,6 +28,16 @@ float ClipperFX::process_signal(const float x) {
     return clip1m1f(shaped_signal);
 }
 
-float ClipperFX::process_main_L(const float x) { return process_signal(x); }
+bool ClipperFX::process_main_L(float* main_frames_L, uint32_t frames) {
+    for (uint32_t i = 0; i < frames; ++i) {
+        main_frames_L[i] = shaper_func(main_frames_L[i]);
+    }
+    return true;
+}
 
-float ClipperFX::process_main_R(const float x) { return process_signal(x); }
+bool ClipperFX::process_main_R(float* main_frames_R, uint32_t frames) {
+    for (uint32_t i = 0; i < frames; ++i) {
+        main_frames_R[i] = shaper_func(main_frames_R[i]);
+    }
+    return true;
+}
