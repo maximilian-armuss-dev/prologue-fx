@@ -22,18 +22,28 @@ void MODFX_PARAM(uint8_t index, int32_t value) {
 void MODFX_PROCESS(const float* main_xn, float* main_yn,
                    const float* sub_xn, float* sub_yn,
                    uint32_t frames) {
-    const float * main_buffer_in = main_xn;
-    float * __restrict main_buffer_out = main_yn;
-    const float * sub_buffer_in = sub_xn;
-    float * __restrict sub_buffer_out = sub_yn;
+    float main_frames_L[frames];
+    float main_frames_R[frames];
+    float sub_frames_L[frames];
+    float sub_frames_R[frames];
 
-    const float * endptr = main_buffer_out + 2 * frames;
+    for (uint32_t i = 0; i < frames; ++i) {
+        main_frames_L[i] = main_xn[2 * i];
+        main_frames_R[i] = main_xn[2 * i + 1];
+        sub_frames_L[i] = sub_xn[2 * i];
+        sub_frames_R[i] = sub_xn[2 * i + 1];
+    }
 
-    for (; main_buffer_out < endptr;) {
-        *(main_buffer_out++) = s_plugin_dsp.process_main_L(*(main_buffer_in++));
-        *(main_buffer_out++) = s_plugin_dsp.process_main_R(*(main_buffer_in++));
-        *(sub_buffer_out++) = s_plugin_dsp.process_sub_L(*(sub_buffer_in++));
-        *(sub_buffer_out++) = s_plugin_dsp.process_sub_R(*(sub_buffer_in++));
+    s_plugin_dsp.process_main_L(main_frames_L, frames);
+    s_plugin_dsp.process_main_R(main_frames_R, frames);
+    s_plugin_dsp.process_sub_L(sub_frames_L, frames);
+    s_plugin_dsp.process_sub_R(sub_frames_R, frames);
+
+    for (uint32_t i = 0; i < frames; ++i) {
+        main_yn[2 * i] = main_frames_L[i];
+        main_yn[2 * i + 1] = main_frames_R[i];
+        sub_yn[2 * i] = sub_frames_L[i];
+        sub_yn[2 * i + 1] = sub_frames_R[i];
     }
 }
 

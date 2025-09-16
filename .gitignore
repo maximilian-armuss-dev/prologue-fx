@@ -63,7 +63,7 @@ tools/emscripten/emsdk
 
 .DS_Store
 .idea/
-.vscode/
+!.vscode/settings.json
 cmake-build-debug/
 CMSIS/
 logs/
